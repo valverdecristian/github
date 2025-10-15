@@ -1,4 +1,4 @@
-# Ultimate Git + GitHub 🚀 ✅ 📢 👉 💡
+# 🚀 Ultimate Git + GitHub
 
 ## 📌 Git
 
@@ -6,10 +6,10 @@
 Es un sistema de control de versiones, que nos permite gestionar cambios en los archivos de código de forma eficiente.
 
 ### 📍 Beneficios de Git
-* ✔ Guardar el historial de cambios.
-* ✔ Recuperar versiones anteriores.
-* ✔ Permitir colaboración en equipo.
-* ✔ Permite trabajar de forma remota o local.
+* ✅ Guardar el historial de cambios.
+* ✅ Recuperar versiones anteriores.
+* ✅ Permitir colaboración en equipo.
+* ✅ Permite trabajar de forma remota o local.
 
 <br>
 
@@ -35,42 +35,32 @@ git config --global core.editor "code --wait"
 
 <br>
 
-### 📂 Primeros Pasos con Git
+### 📂 Flujo de Trabajo y Staging Area
 
-1️⃣ Crear un Repositorio
+#### 1. Creación e inicialización
+
 ```bash
+# Esto crea un repositorio vacío en la carpeta indicada.
+# Si ya estoy en la carpeta donde voy a trabajar solo uso 'git init'
 git init nombre-del-repo
 cd nombre-del-repo
 ```
-📢 Esto crea un repositorio vacío en la carpeta indicada.
-📢 Si ya estoy en la carpeta donde voy a trabajar solo uso 'git init'
 
-<br>
+#### 2. Zona de Preparación (Staging Area)
 
-2️⃣ Agregar Archivos al Repositorio
+La Zona de Preparación (o Índice) es un paso intermedio donde seleccionamos exactamente qué cambios queremos incluir en el próximo commit.
+
 ```bash
-git add archivo.txt
-```
-
-<br>
-
-3️⃣ Hacer un Commit (Guardar Cambios en nuestro repositorio)
-```bash
-git commit -m "mensaje descriptivo del cambio"
-```
-
-<br>
-
-4️⃣ Ver el Estado del Repositorio
-```bash
+# Ver el estado de los archivos (cuáles están modificados, cuáles en Staging).
 git status
-```
 
-<br>
+# Agregar Cambios a la Zona de Preparación (Staging Area)
+git add archivo.txt
 
-5️⃣ Ver el Historial de Cambios
-```bash
-git log
+# Tomar una fotografía instantánea (Commit)
+# El commit SOLO incluye los cambios que están en el Staging Area.
+# el mensaje no puede superar los 50 caracteres (sino usar git commit + enter y agregar descripcion desde la tercera linea)
+git commit -m "mensaje descriptivo del cambio"
 ```
 
 <br>
@@ -88,10 +78,74 @@ Tipos de control de versiones:
 
 ### 📍 ¿Como usar Git?
 
-- desde la Terminal.
-- desde nuestro editor de codigo/IDE.
-- desde nuestras herramientas graficas (GUI).
+- ✅ desde la Terminal.
+- ✅ desde nuestro editor de codigo/IDE.
+- ✅ desde nuestras herramientas graficas (GUI).
 
 <br>
 
-### 📍
+### 📍 Conectar con el repositorio Remoto
+
+- Se configura un remoro llamado "origin" que apunte a la URL del repositorio en GitHub.
+- 👉 PRIMERO: se debe obtener la URL (generalmente termina en .git)
+- 👉 SEGUNDO: conectar el repositorio local con el remoto usando el comando "git remote add"
+
+```bash
+# Reemplaza <URL_DEL_REPOSITORIO> con la URL que copiaste de GitHub
+git remote add origin <URL_DEL_REPOSITORIO>
+
+# Enviar los cambios, la primera vez se usa la opcion -u
+git push -u origin main
+```
+
+- `git push`: El comando de envío.
+- `-u`: Configura el remoto por defecto (origin) y la rama por defecto (main) para futuros push y pull
+- `origin`: El nombre del remoto que se acaba de configurar.
+- `main`: El nombre de la rama (local) que se esta enviando (verificar que no sea master).
+
+- 💡 Para futuros envios desde la rama main, solo se necesita usar el comando simple
+
+```bash
+git push
+```
+
+### 📍 Renombrar la rama local
+
+```bash
+# Renombra la rama local de master a main
+git branch -M main
+
+# Empuja la rama renombrada
+git push -u origin main
+```
+
+### 📍 Estados de los Archivos (Short status)
+
+Se refiere a una forma concisa que Git utiliza para mostrar el estado de tus archivos al ejecutar el comando:
+
+```bash
+git status -s
+```
+
+Esto permite ver que cambios realizamos y donde estan (Directorio de trabajo vs Área de preparación)
+Se muestra una linea por cada archivo modificado, con **dos columnas de letras** que representan los estados de ese archivo.
+El formato es XY, donde:
+- X (columna izquierda): Muestra el estado del archivo en el Staging Area.
+- Y (columna derecha): Muestra el estado en el Working Directory.
+
+
+| Símbolo | Significado               | Ubicación                                      | Significado                                    |
+|--------:|---------------------------|------------------------------------------------|------------------------------------------------|
+| `M`     | Modified (Modificado)     | El archivo ha sido modificado.                | `git add` ya ejecutado. Listo para `git commit` // `git add` pendiente
+| `A`     | Added (Añadido)           | El archivo está añadido al Staging Area.      | Archivo listo, falta `git commit` //
+| `D`     | Deleted (Eliminado)       | El archivo ha sido eliminado.                 | falta `git commit` // `git add` para confirmar
+| `??`    | Untracked (Sin seguimiento)| Git no está rastreando este archivo.          | usar `git add` para empezar a rastrearlo
+| `R`     | Renamed (Renombrado)      | El archivo ha sido renombrado.                |
+| `C`     | Copied (Copiado)          | El archivo ha sido copiado.                   |
+| _(espacio)_ | Sin cambios           | El archivo no ha sido modificado.             |
+
+
+### 📍 Historial
+
+Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
+- `(HEAD)` indicara en que rama estamos parados.
