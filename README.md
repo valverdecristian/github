@@ -145,6 +145,14 @@ El formato es XY, donde:
 | _(espacio)_ | Sin cambios           | El archivo no ha sido modificado.             |
 
 
+### 📍 Confirmar cambios (commits)
+
+El "commit" es el comando que toma todos los cambios que están en el "Staging Area" (los que están en verde / columna izquierda) y los guarda permanentemente en el historial de Git con un mensaje.
+
+- **Atajo**
+- -a (de all): combina dos pasos en uno (automaticamente agrega al staging area todos los archivos que Git ya rastrea)
+
+
 ### 📍 Historial
 
 Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
@@ -159,4 +167,14 @@ Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
 ```bash
 git show id-commit:archivo-especifico.txt
 ```
+
+### 📍 Sacando archivos del Staging Area
+
+- Para deshacer un `git add`, el comando es:
+
+```bash
+git restore --staged nombre-del-archivo
+```
+
+📢 Es importante no olvidar ``--staged` porque sino descarta por completo todos los cambios que se hizo en ese archivo y lo revierte a la version del último commit. (es irreversible).
 
