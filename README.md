@@ -130,8 +130,8 @@ git status -s
 Esto permite ver que cambios realizamos y donde estan (Directorio de trabajo vs Área de preparación)
 Se muestra una linea por cada archivo modificado, con **dos columnas de letras** que representan los estados de ese archivo.
 El formato es XY, donde:
-- X (columna izquierda): Muestra el estado del archivo en el Staging Area.
-- Y (columna derecha): Muestra el estado en el Working Directory.
+- X (columna izquierda): Muestra el estado del archivo en el Staging Area. (en verde)
+- Y (columna derecha): Muestra el estado en el Working Directory. (en rojo)
 
 
 | Símbolo | Significado               | Ubicación                                      | Significado                                    |
@@ -149,3 +149,14 @@ El formato es XY, donde:
 
 Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
 - `(HEAD)` indicara en que rama estamos parados.
+
+### 📍 Ver contenido de commits
+
+- Se debe usar el id del commit o al menos una parte, por ejemplos los primeros 4 caracteres
+- Si quiero ver algun archivo en especifico le agrego dos puntos y el nombre
+- con el comando show puedo ver commits, blob, tree y tags
+
+```bash
+git show id-commit:archivo-especifico.txt
+```
+
