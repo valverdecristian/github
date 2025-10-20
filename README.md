@@ -145,6 +145,25 @@ El formato es XY, donde:
 | _(espacio)_ | Sin cambios           | El archivo no ha sido modificado.             |
 
 
+### 📍 Revisar Cambios (git diff)
+
+Antes de hacer un `git commit`, es una buena práctica revisar los cambios que están a punto de guardarse.
+- 📢 esto se puede ver mejor con alguna herramienta grafica como VS Code.
+- git diff tiene dos modos principales
+
+1) Ver cambios aun NO PREPARADOS: este comando muestra los cambios que todavia NO se agregaron al Staging Area.
+2) Ver cambios YA PREPARADOS: muestra los cambios que SI estan en el Staging Area.
+
+```bash
+# 1
+git diff
+
+# 2 ambas opciones hacen exactamente lo mismo
+git diff --cached
+git diff --staged
+```
+
+
 ### 📍 Confirmar cambios (commits)
 
 El "commit" es el comando que toma todos los cambios que están en el "Staging Area" (los que están en verde / columna izquierda) y los guarda permanentemente en el historial de Git con un mensaje.
