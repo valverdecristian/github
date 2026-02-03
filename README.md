@@ -148,7 +148,6 @@ El formato es XY, donde:
 ### 📍 Revisar Cambios (git diff)
 
 Antes de hacer un `git commit`, es una buena práctica revisar los cambios que están a punto de guardarse.
-- 📢 esto se puede ver mejor con alguna herramienta grafica como VS Code.
 - git diff tiene dos modos principales
 
 1) Ver cambios aun NO PREPARADOS: este comando muestra los cambios que todavia NO se agregaron al Staging Area.
@@ -163,6 +162,27 @@ git diff --cached
 git diff --staged
 ```
 
+### 📍 Ver cambios de forma Visual (git difftool)
+
+Si los cambios son muchos o complejos, la terminal se vuelve difícil de leer. Para eso usamos herramientas gráficas (como VS Code) que permiten ver los archivos lado a lado.
+
+- Comandos: Son idénticos a los anteriores, pero cambiando diff por difftool.
+
+```bash
+git difftool          # Ver cambios no preparados visualmente
+git difftool --staged # Ver cambios preparados visualmente
+```
+
+### 💡 Configuración para VS Code
+
+Para que Git sepa que debe abrir VS Code al usar este comando, ejecutá estas líneas una sola vez:
+
+```bash
+git config --global diff.tool vscode
+git config --global difftool.vscode.cmd 'code --wait --diff $LOCAL $REMOTE'
+```
+
+Para verificar esta configuracion usamos el comando: git config --global -e. Deberiamos ver como abrio vscode y ver las dos variables, sino agregarlas manualmente.
 
 ### 📍 Confirmar cambios (commits)
 
@@ -193,7 +213,26 @@ git show id-commit:archivo-especifico.txt
 
 ```bash
 git restore --staged nombre-del-archivo
+git restore nombre-del-archivo #elimina los cambios completamente
 ```
 
 📢 Es importante no olvidar ``--staged` porque sino descarta por completo todos los cambios que se hizo en ese archivo y lo revierte a la version del último commit. (es irreversible).
 
+Para forzar la eliminacion de un archivo se usa el comando git clean -f (opcion peligrosa)
+
+### 📍 Restaurar archivos a versiones anteriores
+
+Si cometiste un error y necesitás que un archivo vuelva a ser exactamente como era en un commit pasado, usamos git restore con el flag --source. Source se entiende en este contexto como "fuente"
+
+```bash
+# 1. Buscás el ID del commit donde todo estaba bien
+git log --oneline
+
+# 2. Restaurás el archivo desde esa "fuente" (source)
+git restore --source <id-commit> <nombre-del-archivo>
+
+# alternativa al id, utilizar HEAD~1
+git restore --source=HEAD~1 nombre-del-archivo # ~1 indica que se quiere volver 1 commit anterior
+```
+
+💡 Nota importante: Al ejecutar esto, el archivo en tu Working Directory cambiará automáticamente a la versión vieja. Luego deberás hacer git add y git commit para "confirmar" que querés quedarte con esa versión recuperada.
