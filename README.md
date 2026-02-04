@@ -210,6 +210,45 @@ git show id-commit:archivo-especifico.txt
 git show HEAD~3 # 3 commits hacia atras
 ```
 
+### 📍 Etiquetas (Tags)
+
+Existen dos tipos principales de etiquetas, pero para nuestro caso las más recomendadas son las **anotadas**, ya que guardan mucha información.
+
+1) **Crear una etiqueta anotada**
+Este tipo de etiqueta incluye el nombre de quien la creó, la fecha y un mensaje explicativo.
+
+```bash
+git tag -a v1.0 -m "Versión estable del proyecto"
+```
+
+2) **Crear una etiqueta ligera**
+Es simplemente un marcador que apunta a un commit específico, sin más información.
+
+```bash
+git tag v1.0-beta
+```
+
+3) **Listar y ver etiquetas**
+
+```bash
+# Ver todas las etiquetas creadas
+git tag
+
+# Ver la información de una etiqueta específica y su commit
+git show v1.0
+```
+
+4) **Subir etiquetas a GitHub**
+Por defecto, git push no envía las etiquetas al servidor remoto. Debes hacerlo explícitamente:
+
+```bash
+# Subir una etiqueta específica
+git push origin v1.0
+
+# Subir TODAS las etiquetas que tengas localmente
+git push origin --tags
+```
+
 ### 📍 Resumen por Autores (git shortlog)
 
 Si git log es para ver el detalle, git shortlog es para ver el panorama general del equipo. Agrupa los commits por autor.
@@ -244,13 +283,52 @@ Si cometiste un error y necesitás que un archivo vuelva a ser exactamente como 
 git log --oneline
 
 # 2. Restaurás el archivo desde esa "fuente" (source)
-git restore --source <id-commit> <nombre-del-archivo>
+git restore --source id-commit nombre-del-archivo
 
 # alternativa al id, utilizar HEAD~1
 git restore --source=HEAD~1 nombre-del-archivo # ~1 indica que se quiere volver 1 commit anterior
 ```
 
 💡 Nota importante: Al ejecutar esto, el archivo en tu Working Directory cambiará automáticamente a la versión vieja. Luego deberás hacer git add y git commit para "confirmar" que querés quedarte con esa versión recuperada.
+
+
+### 📍 Historial de un archivo específico
+
+Si querés ver la evolución de un solo archivo a través del tiempo (quién lo tocó y cuándo), podés filtrar el log:
+
+```bash
+git log -- nombre-del-archivo
+
+# Para ver qué cambió exactamente en cada commit de ese archivo
+git log -p -- nombre-del-archivo
+```
+
+** 💡 El "Pro-Tip": Si el archivo cambió de nombre en el pasado (usando git mv), el historial normal se cortará. Para ver TODO el historial incluso antes del cambio de nombre, usá: git log --follow -- nombre-del-archivo.
+
+
+### 📍 Recuperar un archivo eliminado
+
+Si borraste un archivo y ya hiciste commit de esa eliminación, no te preocupes: el archivo sigue en el historial. Para traerlo de vuelta, el proceso tiene dos pasos.
+
+1) encontrar el último commit donde existia el archivo
+
+```bash
+git log --oneline -- nombre-del-archivo
+```
+
+** Este comando muestra la lista de commits donde se encuentra ese archivo, el primero que aparece suele ser el de la eliminacion, se debe tomar el ID del commit anterior para poder restaurarlo usando el comando restore
+
+```bash
+git restore --source id-commit -- nombre-del-archivo
+```
+
+### 📍 Responsabilidad y Contexto (git blame)
+
+git blame te permite ver, línea por línea, quién fue la última persona en modificar un archivo, en qué commit lo hizo y en qué fecha.
+
+```bash
+git blame nombre-del-archivo
+```
 
 ### 📍 Control Granular (--patch o -p)
 
@@ -262,6 +340,7 @@ Lo mas comun es usar `git add -p`, al ejecutarlo Git mostrara un trozo de códig
 - n (no): No lo agrega.
 - s (split): Si el bloque es muy grande, lo divide en partes más pequeñas.
 - q (quit): Sale del proceso.
+
 
 ### 📍 Resumen de Cambios (--stat)
 
@@ -300,14 +379,6 @@ git grep -n "texto_a_buscar"
 ```
 
 
-## 📍 Alias
-
-```bash
-git config --global alias.gl "log --online --graph" # entre comillas lo que queremos ejecutar
-```
-
-Luego usamos el comando "git gl", y se ejecutara lo que pusimos como alias, para verificar que ese alias fue agregado usamos el comando `git config --global -e`, se podra ver una nueva sesion llamada "alias" seguido el comando y lo que se va a ejecutar.
-
 ## 📍 Navegación y Ramas (git checkout)
 
 git checkout se usa principalmente para moverte entre las diferentes "líneas de tiempo" (ramas) de tu proyecto o para recuperar versiones específicas de archivos. Aunque hoy existen git switch y git restore.
@@ -335,6 +406,16 @@ git checkout -- nombre-del-archivo
 ** ⚠️ Cuidado: Este comando borra tus cambios actuales de forma irreversible.
 ** 💡 Nota moderna: Se prefiere usar git restore nombre-del-archivo (el que ya tenemos en el resumen).
 
+**Eliminar ramas**
+
+```bash
+# Eliminar una rama local (después de haberla fusionado)
+git branch -d nombre-de-la-rama
+
+# Forzar la eliminación (si no se fusionó)
+git branch -D nombre-de-la-rama
+```
+
 ### 📍 El estado "Detached HEAD" (Cabezal desprendido)
 
 Si usás checkout para ir a un ID de commit específico en lugar de a una rama:
@@ -348,3 +429,10 @@ git checkout a1b2c3d
 ** ⚠️ Significa que no estás parado en ninguna rama. Podés mirar el código y hacer pruebas, pero si hacés commits ahí, se perderán cuando te muevas a otra rama, a menos que crees una rama nueva en ese momento.
 ** 💡 Se sale de ahi simplemente volviendo a una rama con git checkout main
 
+## 📍 Alias
+
+```bash
+git config --global alias.gl "log --oneline --graph" # entre comillas lo que queremos ejecutar
+```
+
+Luego usamos el comando "git gl", y se ejecutara lo que pusimos como alias, para verificar que ese alias fue agregado usamos el comando `git config --global -e`, se podra ver una nueva sesion llamada "alias" seguido el comando y lo que se va a ejecutar.
