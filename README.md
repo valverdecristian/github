@@ -296,3 +296,42 @@ git config --global alias.gl "log --online --graph" # entre comillas lo que quer
 
 Luego usamos el comando "git gl", y se ejecutara lo que pusimos como alias, para verificar que ese alias fue agregado usamos el comando `git config --global -e`, se podra ver una nueva sesion llamada "alias" seguido el comando y lo que se va a ejecutar.
 
+## 📍 Navegación y Ramas (git checkout)
+
+git checkout se usa principalmente para moverte entre las diferentes "líneas de tiempo" (ramas) de tu proyecto o para recuperar versiones específicas de archivos. Aunque hoy existen git switch y git restore.
+
+1) Cambiar de rama: Si querés saltar de tu rama actual a otra ya existente.
+
+```bash
+git checkout nombre-de-la-rama
+```
+
+** 💡 Nota moderna: Ahora se recomienda usar git switch nombre-de-la-rama porque es más descriptivo.
+
+2) Crear y cambiar a una rama nueva (atajo): uno de los comandos que mas voy a utilizar.
+
+```bash
+git checkout -b nueva-rama # -b significa branch
+```
+
+3) Volver a una versión anterior de un archivo: si modificamos un archivo y queremos volver a estar exactamente como en el ultimo commit (descartando los cambios actuales)
+
+```bash
+git checkout -- nombre-del-archivo
+```
+
+** ⚠️ Cuidado: Este comando borra tus cambios actuales de forma irreversible.
+** 💡 Nota moderna: Se prefiere usar git restore nombre-del-archivo (el que ya tenemos en el resumen).
+
+### 📍 El estado "Detached HEAD" (Cabezal desprendido)
+
+Si usás checkout para ir a un ID de commit específico en lugar de a una rama:
+
+```bash
+git checkout a1b2c3d
+
+# Entrarás en un estado donde Git te avisa que el "HEAD" se desprendió.
+```
+
+** ⚠️ Significa que no estás parado en ninguna rama. Podés mirar el código y hacer pruebas, pero si hacés commits ahí, se perderán cuando te muevas a otra rama, a menos que crees una rama nueva en ese momento.
+** 💡 Se sale de ahi simplemente volviendo a una rama con git checkout main
