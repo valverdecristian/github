@@ -214,11 +214,16 @@ git show HEAD~3 # 3 commits hacia atras
 
 Existen dos tipos principales de etiquetas, pero para nuestro caso las más recomendadas son las **anotadas**, ya que guardan mucha información.
 
+📌 **Etiquetar commits pasados** No es necesario estar parado en el commit para etiquetarlo. Solo necesitás su ID (hash)
+
 1) **Crear una etiqueta anotada**
 Este tipo de etiqueta incluye el nombre de quien la creó, la fecha y un mensaje explicativo.
 
 ```bash
 git tag -a v1.0 -m "Versión estable del proyecto"
+
+# para un commit pasado agregar el id-commit antes del -m
+git tag -a v1.0 8cf31b2 -m "Version estable"
 ```
 
 2) **Crear una etiqueta ligera**
@@ -233,6 +238,9 @@ git tag v1.0-beta
 ```bash
 # Ver todas las etiquetas creadas
 git tag
+
+# Ver etiquetas con mensaje
+git tag -n
 
 # Ver la información de una etiqueta específica y su commit
 git show v1.0
@@ -367,7 +375,7 @@ Si recordás una función o una línea de código específica, pero no sabés en
 
 ```bash
 git log --oneline -S"nombre_de_la_funcion" -i -p # -p o -patch, para mostrar el diff (código exacto)
-# -i para que no sea case-sensetive
+# -i para que no sea case-isensitive
 ```
 
 ### 📍 Buscar en los archivos actuales (git grep)
@@ -436,3 +444,33 @@ git config --global alias.gl "log --oneline --graph" # entre comillas lo que que
 ```
 
 Luego usamos el comando "git gl", y se ejecutara lo que pusimos como alias, para verificar que ese alias fue agregado usamos el comando `git config --global -e`, se podra ver una nueva sesion llamada "alias" seguido el comando y lo que se va a ejecutar.
+
+
+### 📍 Encontrar el origen de un Bug (git bisect)
+
+git bisect se usa para encontrar exactamente qué commit introdujo un error (bug) en tu código utilizando una búsqueda binaria.
+
+Es especialmente útil cuando tenés cientos de commits y sabés que ayer el proyecto funcionaba bien, pero hoy algo se rompió y no sabés en qué momento pasó.
+
+En lugar de revisar cada commit uno por uno, git bisect divide el historial a la mitad, te pide que pruebes si el código funciona, y descarta la mitad donde el error no está. Es mucho más rápido que buscar manualmente.
+
+**Flujo**
+
+```bash
+# 1 iniciar el proceso
+git bisect start
+
+# 2 marcar el estado actual como "malo"
+git bisect bad
+
+# 3 marcar un punto en el pasado como "bueno"
+git bisect good id-commit-o-tag
+
+# 4 Git te lleva a la mitad. Probás el código y respondés:
+git bisect good   # (si funciona)
+# O...
+git bisect bad    # (si sigue roto)
+
+# 5 Al terminar, volvés a la normalidad con:
+git bisect reset
+```
