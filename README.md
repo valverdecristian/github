@@ -205,6 +205,9 @@ Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
 
 ```bash
 git show id-commit:archivo-especifico.txt
+
+# alternativa
+git show HEAD~3 # 3 commits hacia atras
 ```
 
 ### 📍 Sacando archivos del Staging Area
@@ -236,3 +239,60 @@ git restore --source=HEAD~1 nombre-del-archivo # ~1 indica que se quiere volver 
 ```
 
 💡 Nota importante: Al ejecutar esto, el archivo en tu Working Directory cambiará automáticamente a la versión vieja. Luego deberás hacer git add y git commit para "confirmar" que querés quedarte con esa versión recuperada.
+
+### 📍 Control Granular (--patch o -p)
+
+El flag `--patch` permite trabajar por "hunks" (fragmentos de código) en lugar de archivos completos.
+En un mismo archivo podemos realizar varios cambios y cuando hacemos un commit con --patch podemos decidir que parte agregar al Staging Area.
+Lo mas comun es usar `git add -p`, al ejecutarlo Git mostrara un trozo de código y una pregunta `Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]?`
+
+- y (yes): Agrega ese pedazo al Staging Area.
+- n (no): No lo agrega.
+- s (split): Si el bloque es muy grande, lo divide en partes más pequeñas.
+- q (quit): Sale del proceso.
+
+### 📍 Resumen de Cambios (--stat)
+
+Mientras que git diff te muestra cada línea que cambió, --stat te da un resumen estadístico.
+
+Es ideal para cuando querés saber "qué tanto" cambió el proyecto sin leer todo el código. Te muestra:
+
+1) Qué archivos fueron modificados.
+2) Cuántas líneas se insertaron (+) y cuántas se borraron (-) por archivo.
+3) Un conteo total al final.
+
+Se puede usar principalmente con diff y con log:
+
+```bash
+git diff --stat # Resumen de lo que cambiaste en tu carpeta.
+git log --stat # Resumen de cambios en cada commit del historial.
+```
+
+## 📍 Búsqueda Avanzada
+
+### 📍 Buscar en el historial (The Pickaxe)
+
+Si recordás una función o una línea de código específica, pero no sabés en qué commit se agregó o se borró, podés usar el flag -S.
+
+```bash
+git log --oneline -S"nombre_de_la_funcion" -i -p # -p o -patch, para mostrar el diff (código exacto)
+# -i para que no sea case-sensetive
+```
+
+### 📍 Buscar en los archivos actuales (git grep)
+
+Para buscar un texto rapidamente en los archivos actuales se puede usar
+
+```bash
+git grep -n "texto_a_buscar"
+```
+
+
+## 📍 Alias
+
+```bash
+git config --global alias.gl "log --online --graph" # entre comillas lo que queremos ejecutar
+```
+
+Luego usamos el comando "git gl", y se ejecutara lo que pusimos como alias, para verificar que ese alias fue agregado usamos el comando `git config --global -e`, se podra ver una nueva sesion llamada "alias" seguido el comando y lo que se va a ejecutar.
+
