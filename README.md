@@ -437,6 +437,38 @@ git checkout a1b2c3d
 ** ⚠️ Significa que no estás parado en ninguna rama. Podés mirar el código y hacer pruebas, pero si hacés commits ahí, se perderán cuando te muevas a otra rama, a menos que crees una rama nueva en ese momento.
 ** 💡 Se sale de ahi simplemente volviendo a una rama con git checkout main
 
+
+### 📍 Guardado Temporal (git stash)
+
+Imaginate que estás en medio de una funcionalidad compleja en tu rama feature/cristian, tenés código que todavía no termina de funcionar (no querés hacer commit de algo roto), y de repente un compañero te pide que revises un error urgente en la rama main. No podés cambiar de rama con git checkout porque tenés cambios pendientes. Ahí es donde entra el stash.
+
+Se usa para "apartar" cambios que todavía no están listos para un commit, permitiéndote cambiar de rama con un directorio de trabajo limpio.
+
+```bash
+# 1. Guardar de forma organizada (RECOMENDADO)
+git stash push -m "descripción de lo que estabas haciendo"
+
+# 2. Guardar incluyendo archivos nuevos (??)
+git stash push -u -m "incluye archivos nuevos de la sala de juegos"
+
+# 3. Guardado rápido (sin etiqueta personalizada)
+git stash
+
+# Guardar TODO (incluyendo archivos nuevos ??)
+git stash -u
+
+# Ver la lista de cosas guardadas
+git stash list
+
+# Recuperar los cambios y limpiar el cajón
+git stash pop
+
+# Recuperar los cambios pero mantenerlos en el cajón
+git stash apply
+```
+
+📢 Escenario común: Estás trabajando en un componente de Angular, no terminaste la lógica, pero tenés que saltar a main para un fix urgente. Usás git stash, hacés el fix, volvés a tu rama y usás git stash pop.
+
 ## 📍 Alias
 
 ```bash
