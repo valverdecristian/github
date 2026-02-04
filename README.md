@@ -192,7 +192,7 @@ El "commit" es el comando que toma todos los cambios que están en el "Staging A
 - -a (de all): combina dos pasos en uno (automaticamente agrega al staging area todos los archivos que Git ya rastrea)
 
 
-### 📍 Historial
+## 📍 Historial
 
 Para poder ver el historial de nuestros commits utilizamos el comando `git log`.
 - `(HEAD)` indicara en que rama estamos parados.
@@ -209,6 +209,18 @@ git show id-commit:archivo-especifico.txt
 # alternativa
 git show HEAD~3 # 3 commits hacia atras
 ```
+
+### 📍 Resumen por Autores (git shortlog)
+
+Si git log es para ver el detalle, git shortlog es para ver el panorama general del equipo. Agrupa los commits por autor.
+
+```bash
+# Ver quién trabajó más y cuántos commits hizo
+# -s oculta los mensajes de los commits; -n orden descendente
+git shortlog -sn
+```
+
+** 📢 Este comando solo mostrara los commits de la rama donde estamos parados, para ver el resumen completo (del grupo) se debe pasar el nombre: git shortlog main
 
 ### 📍 Sacando archivos del Staging Area
 
@@ -335,3 +347,4 @@ git checkout a1b2c3d
 
 ** ⚠️ Significa que no estás parado en ninguna rama. Podés mirar el código y hacer pruebas, pero si hacés commits ahí, se perderán cuando te muevas a otra rama, a menos que crees una rama nueva en ese momento.
 ** 💡 Se sale de ahi simplemente volviendo a una rama con git checkout main
+
