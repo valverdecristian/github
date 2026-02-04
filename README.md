@@ -474,3 +474,38 @@ git bisect bad    # (si sigue roto)
 # 5 Al terminar, volvés a la normalidad con:
 git bisect reset
 ```
+
+## Gestion de Ramas (Branching)
+
+En Git, una rama es basicamente una **linea de tiempo paralela**. En lugar de tener un solo camino de commits, podés bifurcar el proyecto para trabajar en cosas distintas sin que se molesten entre sí.
+
+**Beneficios**
+
+1) Aislamiento: se puede probar ideas locales o corregir errores criticos sin tocar la version estable
+2) Colaboracion: cada integrante del grupo puede trabajar en su propia funcionalidad.
+3) Orden: se mantiene el historial limpio y organizado por tareas.
+
+### 📍 Conceptos fundamentales
+
+Para gestionar ramas con éxito en nuestros proyectos, necesitamos entender estos tres pilares:
+
+1) La rama "Main" (o Master): Es la rama sagrada. Siempre debe tener codigo que funcione y compile. NUNCA SE DEBERIA TRABAJAR DIRECTAMENTE SOBRE ELLA SI ESTAMOS TRABAJANDO EN EQUIPO.
+2) Ramas de Funcionalidad (Feature Branches): Son ramas temporales, para una tarea especifica. Una vez que la tarea termina y se prueba, se une a la rama principal y la rama temporal se borra.
+3) Fusión (Merge): Git toma los cambios de nuestra rama de funcionalidad y los integra en `main`
+
+```bash
+# listar ramas
+git branch
+
+# crear una rama
+git branch nombre-rama
+
+# convencion: funcionalidad -> feature; error -> bugfix
+# lo mejor es utilizar el numero de ticket
+
+# para cambiarme a la rama creada
+git switch nombre-rama
+
+# cambiar nombre de la rama
+git branch -m nombre-rama nuevo-nombre
+```
