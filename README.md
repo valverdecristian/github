@@ -190,6 +190,7 @@ El "commit" es el comando que toma todos los cambios que están en el "Staging A
 
 - **Atajo**
 - -a (de all): combina dos pasos en uno (automaticamente agrega al staging area todos los archivos que Git ya rastrea)
+- Atajo Pro: -am Combina git add y git commit en un solo paso: git commit -am "mensaje". (Solo funciona con archivos que Git ya rastrea)
 
 
 ## 📍 Historial
@@ -402,8 +403,19 @@ git checkout nombre-de-la-rama
 2) Crear y cambiar a una rama nueva (atajo): uno de los comandos que mas voy a utilizar.
 
 ```bash
+# Forma clasica
 git checkout -b nueva-rama # -b significa branch
+
+# Forma moderna
+# -c (minúscula): Crea una rama nueva. Si ya existe, Git da error para proteger tu trabajo.
+git switch -c nueva-rama
+
+# -C (MAYÚSCULA): Crea la rama o la RESETEA si ya existía.
+# Útil para "reiniciar" una rama desde tu posición actual.
+git switch -C rama-existente
 ```
+
+⚠️ Advertencia sobre -C: Usalo con cuidado, ya que si la rama existía, "teletransporta" el puntero a donde estás parado ahora y perdés los commits previos que tuviera esa rama.
 
 3) Volver a una versión anterior de un archivo: si modificamos un archivo y queremos volver a estar exactamente como en el ultimo commit (descartando los cambios actuales)
 
@@ -551,6 +563,23 @@ git switch nombre-rama
 git branch -m nombre-rama nuevo-nombre
 ```
 
+
+### 📍 Aplicar commits específicos (git cherry-pick)
+
+Permite traer un commit puntual de cualquier rama a nuestra rama actual sin necesidad de hacer un merge completo.
+
+```bash
+# 1. Identificar el commit en la otra rama
+git log --oneline
+
+# 2. Ir a la rama destino, por ej: main
+git checkout main
+
+# 3. Hacer el Cherry-pick
+git cherry-pick id-commit
+```
+
+
 ## 📍 Tipos de Merge
 
 Cuando ejecutás el comando git merge, Git analiza la historia de ambas ramas y decide qué técnica usar para unirlas.
@@ -655,4 +684,6 @@ git revert -m 1 HEAD
 
 🛠️ ¿Cuándo usarlo?: Imagina que fusionaste la rama de un compañero a main, hiciste push a GitHub, y de repente la aplicación de NestJS deja de compilar o el Angular explota en producción.
 
-Como ya subiste los cambios, no puedes usar reset porque borrarías el historial de tus compañeros. Debes usar revert:
+Como ya subiste los cambios, no puedes usar reset porque borrarías el historial de tus compañeros. Debes usar revert
+
+
