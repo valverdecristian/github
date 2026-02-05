@@ -541,3 +541,74 @@ git switch nombre-rama
 # cambiar nombre de la rama
 git branch -m nombre-rama nuevo-nombre
 ```
+
+## 📍 Tipos de Merge
+
+Cuando ejecutás el comando git merge, Git analiza la historia de ambas ramas y decide qué técnica usar para unirlas.
+
+### 📍 Fast-forward Merge
+
+Es el tipo de unión más simple y limpia. Ocurre cuando la rama a la que querés fusionar (ej: main) no ha recibido ningún commit nuevo desde que creaste tu rama de funcionalidad.
+
+* **Cómo funciona**: Git no crea un commit nuevo; simplemente "mueve el puntero" de main hasta el último commit de tu rama.
+* **Resultado**: Un historial lineal, como si nunca te hubieras separado de la rama principal.
+* **A tener en cuenta**: Es el escenario ideal porque nunca genera conflictos.
+
+### 📍 3-way Merge (Merge de 3 vías)
+
+Ocurre cuando las ramas han divergido. Es decir, vos hiciste commits en tu rama feature, pero tus compañeros también subieron cambios a main mientras tanto.
+
+* **Cómo funciona**: Git busca tres puntos para crear la unión:
+  1) El último commit de la rama main.
+  2) El último commit de tu rama feature.
+  3) El ancestro común (el punto donde ambas se separaron).
+
+* **Resultado**: Git crea automáticamente un nuevo commit llamado "Merge commit" que une ambas historias.
+* **A tener en cuenta**: Aquí es donde Git intenta fusionar el código automáticamente. Si no hay cambios en las mismas líneas, se soluciona solo.
+
+
+### 📍 Conflictos de Merge (El momento de la verdad)
+
+Si en un 3-way Merge vos y un compañero modificaron la misma línea del mismo archivo (por ejemplo, el app.component.ts de tu proyecto Angular), Git se detendrá y te dirá: "¡Auxilio! No sé qué versión elegir".
+
+🔍 Cómo identificar un conflicto
+
+Al abrir el archivo en conflicto, verás estas marcas:
+
+```bash
+<<<<<<< HEAD
+// Tu código que está en la rama actual (ej: main)
+console.log("Versión de mis compañeros");
+=======
+// El código que viene de la rama que querés fusionar
+console.log("Mi nueva funcionalidad");
+>>>>>>> feature/cristian
+```
+
+* <<<<<<< HEAD: Indica dónde empieza el conflicto en tu rama actual.
+* =======: Es el separador entre ambas versiones.
+* <>>>>>> nombre-rama: Indica el final del conflicto.
+
+* Para resolverlo se debe limpiar y marcar como resuelto, y finalmente ejecutar git commit (sin el flag -m, para que git use el mensaje de merge automatico)
+
+
+### 💡 Flujo de Trabajo Grupal (Workflow)
+
+Para integrar una funcionalidad terminada al proyecto principal:
+
+```bash
+# ir a la rama principal
+git switch main
+
+# traer lo ultimo del grupo (p/ evitar conflictos)
+git pull origin main
+
+# unir mi trabajo
+git merge mi-rama
+
+# subir todo a gitHub
+git push origin main
+
+# limpieza (opcional)
+git branch -d nombre-de-rama
+```
