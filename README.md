@@ -424,6 +424,14 @@ git branch -d nombre-de-la-rama
 git branch -D nombre-de-la-rama
 ```
 
+#### 🌱 Nomenclatura de Ramas (El estándar profesional)
+
+* **feat/**: para nuevas funcionalidades.
+* **fix/**: para correccion de errores.
+* **docs/**: solo cambios en documentación.
+* **refactor/**: mejoras en el código que no cambian la lógica.
+
+
 ### 📍 El estado "Detached HEAD" (Cabezal desprendido)
 
 Si usás checkout para ir a un ID de commit específico en lugar de a una rama:
@@ -507,7 +515,7 @@ git bisect bad    # (si sigue roto)
 git bisect reset
 ```
 
-## Gestion de Ramas (Branching)
+## 🔀 Gestion de Ramas (Branching)
 
 En Git, una rama es basicamente una **linea de tiempo paralela**. En lugar de tener un solo camino de commits, podés bifurcar el proyecto para trabajar en cosas distintas sin que se molesten entre sí.
 
@@ -516,6 +524,7 @@ En Git, una rama es basicamente una **linea de tiempo paralela**. En lugar de te
 1) Aislamiento: se puede probar ideas locales o corregir errores criticos sin tocar la version estable
 2) Colaboracion: cada integrante del grupo puede trabajar en su propia funcionalidad.
 3) Orden: se mantiene el historial limpio y organizado por tareas.
+
 
 ### 📍 Conceptos fundamentales
 
@@ -546,6 +555,7 @@ git branch -m nombre-rama nuevo-nombre
 
 Cuando ejecutás el comando git merge, Git analiza la historia de ambas ramas y decide qué técnica usar para unirlas.
 
+
 ### 📍 Fast-forward Merge
 
 Es el tipo de unión más simple y limpia. Ocurre cuando la rama a la que querés fusionar (ej: main) no ha recibido ningún commit nuevo desde que creaste tu rama de funcionalidad.
@@ -553,6 +563,7 @@ Es el tipo de unión más simple y limpia. Ocurre cuando la rama a la que queré
 * **Cómo funciona**: Git no crea un commit nuevo; simplemente "mueve el puntero" de main hasta el último commit de tu rama.
 * **Resultado**: Un historial lineal, como si nunca te hubieras separado de la rama principal.
 * **A tener en cuenta**: Es el escenario ideal porque nunca genera conflictos.
+
 
 ### 📍 3-way Merge (Merge de 3 vías)
 
@@ -565,6 +576,16 @@ Ocurre cuando las ramas han divergido. Es decir, vos hiciste commits en tu rama 
 
 * **Resultado**: Git crea automáticamente un nuevo commit llamado "Merge commit" que une ambas historias.
 * **A tener en cuenta**: Aquí es donde Git intenta fusionar el código automáticamente. Si no hay cambios en las mismas líneas, se soluciona solo.
+
+
+### 📍 Diccionario de Punteros
+
+Cuando ves un git log, los nombres en colores entre paréntesis indican:
+* HEAD: Mi ubicación actual (donde estoy parado).
+* nombre-rama: El último commit de esa rama en mi computadora.
+* origin/nombre-rama: El último commit que se subió a GitHub (el servidor remoto).
+
+📢 Estado Ideal: Cuando ves (HEAD -> main, origin/main), significa que tu trabajo local y el remoto coinciden. ¡Estás al día!
 
 
 ### 📍 Conflictos de Merge (El momento de la verdad)
@@ -589,17 +610,8 @@ console.log("Mi nueva funcionalidad");
 * =======: Es el separador entre ambas versiones.
 * <>>>>>> nombre-rama: Indica el final del conflicto.
 
-* Para resolverlo se debe limpiar y marcar como resuelto, y finalmente ejecutar git commit (sin el flag -m, para que git use el mensaje de merge automatico)
-
-
-### 📍 Diccionario de Punteros
-
-Cuando ves un git log, los nombres en colores entre paréntesis indican:
-* HEAD: Mi ubicación actual (donde estoy parado).
-* nombre-rama: El último commit de esa rama en mi computadora.
-* origin/nombre-rama: El último commit que se subió a GitHub (el servidor remoto).
-
-📢 Estado Ideal: Cuando ves (HEAD -> main, origin/main), significa que tu trabajo local y el remoto coinciden. ¡Estás al día!
+📢 Para resolverlo se debe limpiar y marcar como resuelto, y finalmente ejecutar git commit (sin el flag -m, para que git use el mensaje de merge automatico).
+📢 En VSCode podemos resolverlo tambien apretando "Resolve in Merge Editor"
 
 
 ### 💡 Flujo de Trabajo Grupal (Workflow)
@@ -622,3 +634,25 @@ git push origin main
 # limpieza (opcional)
 git branch -d nombre-de-rama
 ```
+
+
+### 📍 Deshacer un Merge ya publicado (git revert -m 1)
+
+Si fusionaste una rama a main por error y ya hiciste push a GitHub, no podés borrar el historial. Debés crear un commit que deshaga la fusión.
+
+Mientras que git revert se usa para deshacer un commit normal, git revert -m 1 HEAD se utiliza específicamente para deshacer un Merge Commit (un commit de fusión) que ya fue enviado al repositorio remoto.
+
+Cuando haces un commit normal, este tiene un solo "padre" (el commit anterior). Pero un Merge Commit tiene dos padres: uno de la rama principal (ej. main) y otro de la rama que integraste (ej. feature/login).
+
+* -m 1: Le indica a Git que debe mantener como línea principal (mainline) al primer padre. Casi siempre, el padre 1 es la rama en la que estabas parado cuando hiciste el merge (generalmente main).
+
+```bash
+# Revertir el merge commit actual manteniendo la línea de 'main'
+git revert -m 1 HEAD
+```
+
+📢 Dato clave: Usá esto solo si el merge ya está en GitHub. Si el error es solo local, es más fácil usar git reset --hard para volver atrás.
+
+🛠️ ¿Cuándo usarlo?: Imagina que fusionaste la rama de un compañero a main, hiciste push a GitHub, y de repente la aplicación de NestJS deja de compilar o el Angular explota en producción.
+
+Como ya subiste los cambios, no puedes usar reset porque borrarías el historial de tus compañeros. Debes usar revert:
