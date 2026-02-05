@@ -592,6 +592,16 @@ console.log("Mi nueva funcionalidad");
 * Para resolverlo se debe limpiar y marcar como resuelto, y finalmente ejecutar git commit (sin el flag -m, para que git use el mensaje de merge automatico)
 
 
+### 📍 Diccionario de Punteros
+
+Cuando ves un git log, los nombres en colores entre paréntesis indican:
+* HEAD: Mi ubicación actual (donde estoy parado).
+* nombre-rama: El último commit de esa rama en mi computadora.
+* origin/nombre-rama: El último commit que se subió a GitHub (el servidor remoto).
+
+📢 Estado Ideal: Cuando ves (HEAD -> main, origin/main), significa que tu trabajo local y el remoto coinciden. ¡Estás al día!
+
+
 ### 💡 Flujo de Trabajo Grupal (Workflow)
 
 Para integrar una funcionalidad terminada al proyecto principal:
