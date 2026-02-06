@@ -705,3 +705,20 @@ git rebase main
 
 * ✅ Ventaja: Evita los "Merge Commits" innecesarios y deja un historial fácil de seguir.
 * ❌ Peligro: Reescribe la historia. Solo se debe usar en ramas locales que no hayan sido compartidas en GitHub.
+
+
+### 📍 Squash Merge (El Compactador)
+
+El Squash Merge es una técnica de fusión que funciona como un "compactador" de commits. En lugar de traer toda la historia detallada de una rama, toma todos los commits que hiciste en ella y los combina en un solo commit nuevo en la rama de destino (generalmente main).
+
+Toma todos los commits de una rama y los une en uno solo al fusionarlos con main.
+
+* Ventaja: Mantiene el historial principal limpio de commits innecesarios o mensajes poco descriptivos.
+
+* Desventaja: Se pierde el detalle de los pasos intermedios que se realizaron en la rama de funcionalidad.
+
+* Comando local: `git merge --squash rama`
+
+* En GitHub: Se activa al cerrar un Pull Request con la opción "Squash and merge".
+
+📢 Dato de oro: Es la opción favorita en entornos profesionales para que el historial de producción sea impecable y fácil de auditar.
