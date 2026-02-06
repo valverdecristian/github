@@ -687,3 +687,21 @@ git revert -m 1 HEAD
 Como ya subiste los cambios, no puedes usar reset porque borrarías el historial de tus compañeros. Debes usar revert
 
 
+### 📍 Reorganizar la Historia (git rebase)
+
+* Significa cambiar la base de tu rama a la punta de otra rama (generalmente main)
+* Usarlo solo si un solo desarrollador esta usando esa rama.
+
+Cuando hacés un rebase de tu rama sobre main, lo que hacés es tomar todos tus commits, "despegarlos" temporalmente, actualizar tu rama para que empiece desde el último commit de main, y luego volver a "pegar" tus cambios uno por uno encima.
+
+Mientras que el merge crea un commit extra para unir las historias (un historial ramificado), el rebase reescribe la historia para que parezca que siempre estuviste trabajando sobre la versión más nueva de main.
+
+⚠️ "Nunca hagas rebase de una rama que ya subiste a GitHub y que otros están usando".
+
+```bash
+# Estando en nuestra rama de funcionalidad:
+git rebase main
+```
+
+* ✅ Ventaja: Evita los "Merge Commits" innecesarios y deja un historial fácil de seguir.
+* ❌ Peligro: Reescribe la historia. Solo se debe usar en ramas locales que no hayan sido compartidas en GitHub.
