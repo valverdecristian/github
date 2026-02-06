@@ -722,3 +722,32 @@ Toma todos los commits de una rama y los une en uno solo al fusionarlos con main
 * En GitHub: Se activa al cerrar un Pull Request con la opción "Squash and merge".
 
 📢 Dato de oro: Es la opción favorita en entornos profesionales para que el historial de producción sea impecable y fácil de auditar.
+
+
+## ☁️ GitHub y Colaboración
+
+### 📍 Fork: Tu propio laboratorio
+
+Se utiliza para copiar un repositorio ajeno a tu cuenta de GitHub. Esto te permite experimentar sin afectar el proyecto original.
+
+* Flujo de trabajo:
+
+1) En GitHub seleccionar `Fork` (esto creara una copia)
+2) Clonar el fork: `git clone url-de-tu-fork`
+3) Configurar el remoto original (upstream): para poder traer las actualizaciones que se hagan en el repo original.
+
+```bash
+# Agregar el repositorio original como una fuente llamada 'upstream'
+git remote add upstream URL_DEL_REPO_ORIGINAL
+
+# Verificar tus remotos (deberías ver origin y upstream)
+git remote -v
+```
+
+4) Si el repo original cambia, sincronizar los cambios en mi PC
+
+```bash
+git pull upstream main
+```
+
+5) Una vez que termino algo en mi fork, uso un **Pull Request (PR)** para pedirle al dueño del repo que incorpore mis cambios.
