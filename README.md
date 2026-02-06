@@ -750,4 +750,54 @@ git remote -v
 git pull upstream main
 ```
 
+💡 Fetch vs Pull (Diferencia clave)
+* fetch: Trae la información pero no toca tu código. Actualiza upstream/main.
+* pull: Trae la información y la fusiona inmediatamente (fetch + merge).
+
 5) Una vez que termino algo en mi fork, uso un **Pull Request (PR)** para pedirle al dueño del repo que incorpore mis cambios.
+
+
+### 📍 Clonar un repositorio
+
+```bash
+git clone url-repositorio opcional-nuevo-nombre
+```
+
+### 📍 Inspección Remota (git fetch)
+
+Descarga el historial y los cambios del repositorio remoto pero no los fusiona con tu trabajo local. Es una forma segura de ver qué hicieron los demás antes de integrar.
+
+```bash
+# Descargar cambios de mi fork
+git fetch origin
+```
+
+📢 **Diferencia técnica:** `git pull` hace un `fetch` y un `merge` al mismo tiempo. Usar `fetch` primero te permite revisar los cambios con `git log` o `git diff` antes de afectar tu código.
+
+💡 Recordá que cuando hacés fetch, el puntero que se mueve es el de origin/main. Tu puntero main se queda donde estaba hasta que hagas el merge.
+
+### 📍 Listado Detallado de Ramas (git branch -v)
+
+A diferencia del comando git branch seco (que solo te da los nombres), el flag -v te muestra una "radiografía" rápida de tus ramas.
+
+🚀 El "Siguiente Nivel": git branch -vv
+
+```bash
+# Listar ramas (solo nombres)
+git branch
+
+# Listar ramas con su último commit y mensaje (Verbose)
+git branch -v
+
+# Listar ramas con info de seguimiento remoto (Very Verbose)
+# Ideal para saber si te falta hacer un push o un pull
+git branch -vv
+```
+
+### ⚠️ Nota de Seguridad
+
+* Nunca uses git push -f en ramas compartidas (como main o develop).
+
+El comando git push -f (o --force) es como el botón de "borrón y cuenta nueva" para el repositorio remoto. En el contexto de tus proyectos en la UTN, es una herramienta que debés manejar con muchísimo cuidado porque puede generar caos en el trabajo de tus compañeros.
+
+📢 Regla de oro: Si necesitás deshacer algo que ya está en GitHub, es mucho más profesional y seguro usar git revert, ya que crea un commit nuevo que deshace el anterior sin borrar el historial.
