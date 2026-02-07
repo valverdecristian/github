@@ -762,6 +762,11 @@ git pull upstream main
 
 5) Una vez que termino algo en mi fork, uso un **Pull Request (PR)** para pedirle al dueño del repo que incorpore mis cambios.
 
+#### 📢 Tip de "Cultura Dev"
+
+A veces, si el cambio es muy pequeño (como corregir un error de ortografía en el README), se usa "LGTM concept", que significa: "Me parece bien la idea, pero revisá este detalle mínimo antes de mergear".
+
+La tradición: A menudo se acompaña de emojis como un barco (🚢) que significa "Ship it!" (¡Enviálo/Publicalo!) o un pulgar arriba (👍).
 
 ### 📍 Clonar un repositorio
 
