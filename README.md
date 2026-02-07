@@ -663,8 +663,11 @@ git merge mi-rama
 # subir todo a gitHub
 git push origin main
 
-# limpieza (opcional)
+# limpieza local (opcional)
 git branch -d nombre-de-rama
+
+# limpieza remota
+git push origin -d nombre-de-rama
 ```
 
 
