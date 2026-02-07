@@ -252,10 +252,13 @@ Por defecto, git push no envía las etiquetas al servidor remoto. Debes hacerlo 
 
 ```bash
 # Subir una etiqueta específica
-git push origin v1.0
+git push origin nombre-etiqueta
 
 # Subir TODAS las etiquetas que tengas localmente
 git push origin --tags
+
+# si quiero eliminar la etiqueta subida
+git push origin --delete nombre-etiqueta
 ```
 
 ### 📍 Resumen por Autores (git shortlog)
@@ -819,3 +822,25 @@ El Personal Access Token (PAT) es, esencialmente, tu contraseña para que Git pu
 * No compartir, ni subir el token a un repo.
 * Se puede configurar para que el token expire en 30, 60 o 90 dias.
 * 📢 Este token se usa cuando te pide la contraseña.
+
+
+### 📍 Lanzamientos y Versiones del Proyecto (GitHub Releases)
+
+El botón de Releases en GitHub es el paso final que convierte tu código en un "producto" terminado. Mientras que los Tags son marcas técnicas en tu historial, una Release es una forma elegante y organizada de entregar tu software a otros usuarios.
+
+Una Release en GitHub es un "envoltorio" que se coloca sobre un Git Tag existente. Sirve para empaquetar una versión específica de tu proyecto.
+
+#### 🌟 ¿Qué beneficios tiene sobre un simple Tag?
+
+* Notas de Lanzamiento (Changelog): Podés escribir una descripción detallada de qué hay de nuevo, qué errores se corrigieron y qué funcionalidades se agregaron.
+* Archivos Adjuntos (Assets): Podés subir archivos compilados, como un .exe de tu juego, un archivo .apk o un ZIP con documentación extra que no querés que ensucie el código fuente.
+* Etiqueta "Latest": GitHub marca automáticamente la versión más reciente como "Latest" para que nadie se confunda de versión.
+* Pre-releases: Podés marcar versiones como "Pre-release" (betas) si el código todavía es inestable.
+
+#### 🛠️ Cómo crear una Release desde la web
+
+1) En tu repositorio de GitHub, buscá la sección Releases a la derecha y hacé clic en "Create a new release".
+2) Choose a tag: Podés elegir un tag que ya hayas subido con git push --tags o crear uno nuevo en ese momento.
+3) Título y Descripción: Dale un nombre (ej: v1.0.0 - Entrega Final) y detallá los cambios.
+4) Adjuntar: Si tenés algún manual de usuario en PDF o un ejecutable, arrastralo a la zona de carga.
+5) Publicar: Hacé clic en Publish release.
