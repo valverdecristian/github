@@ -801,3 +801,21 @@ git branch -vv
 El comando git push -f (o --force) es como el botón de "borrón y cuenta nueva" para el repositorio remoto. En el contexto de tus proyectos en la UTN, es una herramienta que debés manejar con muchísimo cuidado porque puede generar caos en el trabajo de tus compañeros.
 
 📢 Regla de oro: Si necesitás deshacer algo que ya está en GitHub, es mucho más profesional y seguro usar git revert, ya que crea un commit nuevo que deshace el anterior sin borrar el historial.
+
+
+### 📍 Autenticación: Personal Access Token (PAT)
+
+El Personal Access Token (PAT) es, esencialmente, tu contraseña para que Git pueda comunicarse con GitHub desde la terminal. Desde hace un tiempo, GitHub ya no permite usar tu contraseña de usuario para operaciones de Git (como push o pull) por motivos de seguridad; ahora exige este token.
+
+#### 🛠️ Cómo crearlo
+
+1) En GitHub: Vas a Settings (tu perfil) > Developer settings > Personal access tokens.
+2) Elegir tipo: * Fine-grained tokens: Son los modernos y más seguros (podés elegir exactamente a qué repositorio darle acceso).
+  - Tokens (classic): Son los tradicionales y más fáciles de configurar para empezar.
+3) Configurar permisos: Si usás el Classic, asegurate de marcar la casilla repo (para poder hacer push/pull).
+4) Generar y Guardar: Al final hacés clic en Generate token.
+
+* Copiar y Guardar: GitHub solo te mostrará el token una vez. Si cerrás la pestaña sin copiarlo, lo perdés y tenés que crear uno nuevo.
+* No compartir, ni subir el token a un repo.
+* Se puede configurar para que el token expire en 30, 60 o 90 dias.
+* 📢 Este token se usa cuando te pide la contraseña.
