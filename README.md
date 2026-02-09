@@ -852,3 +852,17 @@ Una Release en GitHub es un "envoltorio" que se coloca sobre un Git Tag existent
 3) Título y Descripción: Dale un nombre (ej: v1.0.0 - Entrega Final) y detallá los cambios.
 4) Adjuntar: Si tenés algún manual de usuario en PDF o un ejecutable, arrastralo a la zona de carga.
 5) Publicar: Hacé clic en Publish release.
+
+
+### 📍 Gestión de Tareas (Issues)
+
+Las Issues (Incidencias) son el "To-Do list" del proyecto. Se usan para debatir ideas, reportar errores y asignar tareas al equipo.
+
+Para que una Issue sea útil para el grupo, se debe usar estos tres elementos:
+
+* **Assignees (Asignados):** Define quién trabaja en la tarea.
+* **Labels (Etiquetas):** Categoriza la tarea (Bug, Feature, Docs).
+* **Milestones (Hitos):** Agrupa tareas por fechas de entrega (ej: "Final Mayo").
+
+📢 **Tip de Automatización:** Si en un Pull Request escribís `Closes #numero_issue`, GitHub cerrará la tarea automáticamente cuando se haga el merge.
+
