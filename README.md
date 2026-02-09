@@ -866,3 +866,10 @@ Para que una Issue sea útil para el grupo, se debe usar estos tres elementos:
 
 📢 **Tip de Automatización:** Si en un Pull Request escribís `Closes #numero_issue`, GitHub cerrará la tarea automáticamente cuando se haga el merge.
 
+#### 📍 ¿Cómo cerrar una Issue?
+
+* Manual: Botón Close issue en la web.
+* Por Commit: Usar Closes #nro en el mensaje del commit (ej: git commit -m "feat: login closes #5").
+* Por Pull Request: Escribir Closes #nro en la descripción del PR.
+
+📢 Dato: Usar el número de la issue vincula automáticamente el código con la tarea, dejando un rastro claro de por qué se hizo ese cambio.
