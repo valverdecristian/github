@@ -936,3 +936,33 @@ git push origin feat/nombre-funcionalidad
 4. Revisión (Code Review): Veran nuestro codigo, si esta todo bien se recibe un LGTM (Looks good to me)
 
 5. Merge: El Integration Manager hace clic en Merge pull request.
+
+
+## 🛠️ Re-escribiendo el historial
+
+### 📍 ¿Por qué y cuándo reescribir el historial?
+
+La razón principal es la limpieza. Mientras programamos solemos hacer commits rápidos como "fix", "test", o "ajuste". Reescribir nos permite condensar esos cambios en mensajes claros y profesionales antes de entregar el trabajo.
+
+* **Cuándo hacerlo**: Solo en ramas locales que todavía no subiste a GitHub o en ramas de funcionalidad propias que nadie más está usando.
+* **Cuándo NO hacerlo**: Nunca reescribas el historial de la rama main si ya la compartiste con tu grupo, porque les vas a "romper" el repositorio a todos.
+
+#### 🤝 Protocolo de Trabajo Grupal (Best Practices)
+
+1. Commits Atómicos (Pequeños y Enfocados)
+   1. **Mal**: Un commit llamado "avances del lunes" que cambia el login, arregla un estilo en el CSS y borra un archivo viejo. Si algo falla, no podés deshacer solo una parte.
+   2. **Bien**: Tres commits separados: `feat: login logic`, `fix: header styles`, `docs: remove old images`.
+2. Mensajes Descriptivos (Conventional Commits)
+   1. Estructura: `tipo`: `descripción corta`
+   2. Tipos comunes: `feat` (funcionalidad), `fix` (error), `docs` (documentación), `style` (formato), `refactor` (limpieza de código).
+   3. Ejemplo: feat: agregar validación de edad en registro closes #14.
+3. Nunca trabajar en `main`
+   1. Nadie sube cambios directo a main.
+   2. Todo pasa por una rama de funcionalidad (feat/nombre) y un Pull Request.
+   3. Se requiere al menos un LGTM de otro compañero antes de fusionar.
+4. Sincronización Constante: El "miedo al merge" se cura con frecuencia.
+   1. Regla: Antes de empezar a programar y antes de subir cambios, siempre hacer un git pull upstream main (o origin main según su flujo).
+   2. Esto minimiza los conflictos gigantes al final de la semana.
+5. Definir la estrategia de Merge: como queremos que se vea el historial.
+   1. ¿Quieren ver cada detalle? Usen merge común (3-way merge).
+   2. ¿Quieren una línea recta impecable? Usen rebase o Squash and Merge en GitHub.
