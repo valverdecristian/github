@@ -686,7 +686,7 @@ Cuando haces un commit normal, este tiene un solo "padre" (el commit anterior). 
 git revert -m 1 HEAD
 ```
 
-📢 Dato clave: Usá esto solo si el merge ya está en GitHub. Si el error es solo local, es más fácil usar git reset --hard para volver atrás.
+📢 Dato clave: Usá esto solo si el merge ya está en GitHub. Si el error es solo local, es más fácil usar `git reset --hard` para volver atrás.
 
 🛠️ ¿Cuándo usarlo?: Imagina que fusionaste la rama de un compañero a main, hiciste push a GitHub, y de repente la aplicación de NestJS deja de compilar o el Angular explota en producción.
 
@@ -966,3 +966,34 @@ La razón principal es la limpieza. Mientras programamos solemos hacer commits r
 5. Definir la estrategia de Merge: como queremos que se vea el historial.
    1. ¿Quieren ver cada detalle? Usen merge común (3-way merge).
    2. ¿Quieren una línea recta impecable? Usen rebase o Squash and Merge en GitHub.
+
+
+### 📍 Deshacer Commits (git reset)
+
+El comando git reset se usa para mover el puntero de tu rama actual a un punto anterior de la historia. Es la herramienta para corregir errores antes de haber subido los cambios a GitHub.
+
+#### Detalles del funcionamiento
+
+```bash
+# mueve la flecha del historial un paso atras, pero mantiene los cambios listos en verde (Staging Area)
+git reset --soft HEAD~1
+
+# EL PREDETERMINADO: Mueve el historial atrás y saca los archivos del Staging Area, pero no borra tu trabajo. Tus cambios aparecen en "rojo"
+git reset --mixed HEAD~1
+git reset HEAD~1
+
+# Borra el commit, limpia el Staging Area y elimina físicamente los cambios de tus archivos.
+# Escenario: se prueba una logica nueva que rompe todo y necesitamos volver atras, borrando el rastro y volvemos al punto seguro. Lo peligroso es que es IRREVERSIBLE
+git reset --hard HEAD~1
+```
+
+⚠️ Regla de Oro para el Grupo: Nunca uses git reset (de ningún tipo) sobre commits que ya están en GitHub (origin/main)
+
+```bash
+# revertir mas de un commit: revierte el head1 y head en este caso
+git revert HEAD~2..HEAD
+
+# otra forma de hacer lo mismo (el rango se indica por espacios)
+# puedo pasarle tambien el ID del commit
+git revert HEAD~1 HEAD
+```
