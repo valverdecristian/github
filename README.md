@@ -873,3 +873,66 @@ Para que una Issue sea útil para el grupo, se debe usar estos tres elementos:
 * Por Pull Request: Escribir Closes #nro en la descripción del PR.
 
 📢 Dato: Usar el número de la issue vincula automáticamente el código con la tarea, dejando un rastro claro de por qué se hizo ese cambio.
+
+
+### 📍 El Triángulo de Remotos (origin vs upstream)
+
+Cuando trabajamos con un Fork, nuestra computadora necesita hablar con dos servidores distintos:
+
+1. origin: Es tu copia en GitHub (tu Fork). Aquí es donde tenés permiso para hacer push y guardar tus avances.
+2. upstream: Es el repositorio original. Aquí solo tenés permiso para leer (fetch/pull) y estar al día con lo que el profesor suba.
+
+#### 🛠️ Configuración Inicial (Se hace una sola vez)
+
+Después de clonar tu fork, debés avisarle a Git dónde está el repositorio original:
+
+```bash
+# 1. Vincular el repo original bajo el nombre 'upstream'
+git remote add upstream URL_DEL_REPO_ORIGINAL
+
+# 2. Verificar que ahora tenés dos remotos configurados
+git remote -v
+# Deberías ver:
+# origin   (fetch y push) -> apunta a TU fork
+# upstream (fetch y push) -> apunta al repo base
+
+# opcional: para cambiar de nombre del repo base usamos rename
+git remote rename upstream nuevo-nombre
+```
+
+#### 🔄 El Ciclo de Sincronización (Tu rutina diaria)
+
+```bash
+#1 traer lo nuevo del repo base
+git pull upstream main
+
+#2 trabajo local (nuestros cambios)
+git add
+git commit
+
+#3 subir a NUESTRA nube personal
+git push origin main
+
+#4 proponer cambios (origin -> upstream): desde la web de GitHub, hacer un PR y decidan si integrarlo al proyecto.
+```
+
+
+### 📍 Pull Requests (PR): Propuesta de Cambios
+
+Un Pull Request no es un comando de Git, sino una funcionalidad de GitHub que permite que otros revisen tu código antes de que se fusione con la rama principal (main).
+
+#### 🚀 El Flujo Completo del PR
+
+1. subir tu rama a TU fork (los cambios locales deben estar en la nube)
+
+```bash
+git push origin feat/nombre-funcionalidad
+```
+
+2. Iniciá el PR en GitHub: Al entrar al repositorio (ya sea el tuyo o el upstream), GitHub detectará que subiste una rama nueva y te mostrará un botón amarillo: Compare & pull request.
+
+3. Completá la información: * Título: Claro y conciso
+
+4. Revisión (Code Review): Veran nuestro codigo, si esta todo bien se recibe un LGTM (Looks good to me)
+
+5. Merge: El Integration Manager hace clic en Merge pull request.
